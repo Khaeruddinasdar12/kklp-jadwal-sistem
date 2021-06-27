@@ -31,6 +31,7 @@ Manage Pegawai
 									<th>No.</th>
 									<th>Nip</th>
 									<th>Nama</th>
+									<th>Departemen</th>
 									<th>Email</th>
 									<th>No HP</th>
 									<th>Alamat</th>
@@ -52,7 +53,7 @@ Manage Pegawai
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title"><i class="fa fa-calendar-minus"></i> Tambah Jadwal</h5>
+				<h5 class="modal-title"><i class="fa fa-user-plus"></i> Tambah Pegawai</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -61,38 +62,33 @@ Manage Pegawai
 				@csrf
 				<div class="modal-body">
 					<div class="form-group">
-						<label>Nama Jadwal</label>
+						<label>NIP</label>
+						<input type="text" name="nip" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Nama</label>
 						<input type="text" name="nama" class="form-control">
 					</div>
 					<div class="form-group">
-						<label>Ruangan</label>
-						<input type="text" name="ruangan" class="form-control">
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<label>Tanggal</label>
-							<input type="date" name="waktu" class="form-control" min="<?php echo date('Y-m-d'); ?>">
-						</div>
-						<div class="col-md-3">
-							<label>Jam</label>
-							<select name="jam" class="form-control">
-								@for ($i = 0; $i < 24; $i++)
-								<option>{{$i}}</option>
-								@endfor
-							</select>
-						</div>
-						<div class="col-md-3">
-							<label>Menit</label>
-							<select name="menit" class="form-control">
-								@for ($i = 0; $i < 59; $i++)
-								<option>{{$i}}</option>
-								@endfor
-							</select>
-						</div>
+						<label>Departemen</label>
+						<select class="form-control" name="departemen">
+							<option value="">pilih departemen</option>
+							@foreach($data as $dt)
+							<option value="{{$dt->id}}">{{$dt->nama}}</option>
+							@endforeach
+						</select>
 					</div>
 					<div class="form-group">
-						<label>Deskripsi</label>
-						<textarea name="deskripsi" class="form-control" rows="4"></textarea>
+						<label>Email</label>
+						<input type="email" name="email" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>No HP</label>
+						<input type="text" name="nohp" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Alamat</label>
+						<textarea name="alamat" class="form-control" rows="4"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -106,70 +102,85 @@ Manage Pegawai
 </div>
 <!-- End Modal Tambah Pegawai -->
 
-<!-- Modal Detail Event -->
-<div class="modal fade bd-example-modal-lg" id="modal-detail-event" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+
+<!-- Modal Tambah Pegawai -->
+<div class="modal fade bd-example-modal-lg" id="modal-edit-pegawai" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title"><i class="fa fa-calendar-week"></i> Detail Event </h5>
+				<h5 class="modal-title"><i class="fa fa-user-plus"></i> Edit Pegawai</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-9">
-						<h4 id="nama">Nama Event atau judul event segera</h4>
-						<hr>
-						<p id="lokasi"><i class="fa fa-map-marker-alt"></i> Lokasi acara di tanjung bayang makassar</p>
-						<p id="waktu"><i class="fa fa-clock"></i> Selasa, 5 Mei 2021 08:00 WITA - Selasa, 5 Mei 2021 09:00 WITA</p>
-						<hr>
-						<p align="justify" id="deskripsi"></p>
-
+			<form method="post" id="edit-pegawai">
+				@csrf
+				<div class="modal-body">
+					<input type="hidden" name="hidden_id" id="edit-pegawai-id">
+					<div class="form-group">
+						<label>NIP</label>
+						<input type="text" name="nip" id="nip" class="form-control">
 					</div>
-					<div class="col-3">
-						<div class="row">
-							<label>Thumbnail Event</label>
-						</div>
-						<div class="row">
-							<img src="{{asset('picture.png')}}" width="100px" height="100px" id="gambar">
-						</div>
-						
+					<div class="form-group">
+						<label>Nama</label>
+						<input type="text" name="nama" id="nama" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Departemen</label>
+						<select class="form-control" id="departemen" name="departemen">
+							<option value="">pilih departemen</option>
+							@foreach($data as $dt)
+							<option value="{{$dt->id}}">{{$dt->nama}}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Email</label>
+						<input type="email" name="email" id="email" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>No HP</label>
+						<input type="text" name="nohp" id="nohp" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Alamat</label>
+						<textarea name="alamat" id="alamat" class="form-control" rows="4"></textarea>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
-			</div>
+				<div class="modal-footer">
+					<button type="reset" class="btn btn-secondary btn-sm">Tutup</button>
+					<button type="submit" class="btn btn-primary btn-sm">Submit</button>
+				</div>
+			</form>
 		</div>
 	</form>
 </div>
 </div>
-<!-- End Modal Detail Event -->
+<!-- End Modal Tambah Pegawai -->
 @endsection
 
 @section('js')
 <script type="text/javascript" src="{{asset('datatables.min.js')}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 <script type="text/javascript">
-	$('#modal-detail-event').on('show.bs.modal', function (event) {
+	$('#modal-edit-pegawai').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget) 
-		var id = button.data('id') 
-		var nama = button.data('nama') 
-		var waktu = button.data('waktu') 
-		var lokasi = button.data('lokasi') 
-		var gambar = button.data('gambar')
-		var deskripsi = button.data('deskripsi') 
-		var gbr = '{{ URL::asset("storage")}}/'+gambar
+		var id = button.data('id')
+		var nip = button.data('nip')  
+		var nama = button.data('nama')
+		var email = button.data('email')
+		var nohp = button.data('nohp')   
+		var alamat = button.data('alamat') 
+		var departemen = button.data('departemen')
 
 		var modal = $(this)
-		// modal.find('.modal-body #edit-jurusan-id').val(id)
-		modal.find('.modal-body #nama').html(nama)
-		modal.find('.modal-body #lokasi').html('<i class="fa fa-map-marker-alt"></i> '+lokasi)
-		modal.find('.modal-body #waktu').html('<i class="fa fa-clock"></i> '+waktu)
-		modal.find('.modal-body #deskripsi').html(deskripsi)
-		modal.find('.modal-body #gambar').attr('src', gbr)
-		// modal.find('.modal-body #lokasi').val(lokasi)
+		modal.find('.modal-body #edit-pegawai-id').val(id)
+		modal.find('.modal-body #nip').val(nip)
+		modal.find('.modal-body #nama').val(nama)
+		modal.find('.modal-body #email').val(email)
+		modal.find('.modal-body #nohp').val(nohp)
+		modal.find('.modal-body #alamat').val(alamat)
+		modal.find('.modal-body #departemen').val(departemen)
 	})
 
 	$('#add-pegawai').submit(function(e){ // tambah pegawai
@@ -226,7 +237,7 @@ function hapus_data() { // menghapus jurusan
 						'_token'  : token
 					},
 					success:function(data){
-						$('#tabel_jadwal').DataTable().ajax.reload();
+						$('#tabel_pegawai').DataTable().ajax.reload();
 						berhasil(data.status, data.pesan);
 					},
 					error: function(xhr, status, error){
@@ -260,6 +271,7 @@ tabel = $(document).ready(function(){
               { data: 'DT_RowIndex', name:'DT_RowIndex'},
               { "data": "nip" },
               { "data": "nama" },
+              { "data": "departemen.nama" },
               { "data": "email" },
               { "data": "nohp" },
               { "data": "alamat" },

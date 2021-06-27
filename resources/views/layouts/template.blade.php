@@ -90,6 +90,7 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
           <li class="nav-item">
             <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -99,13 +100,28 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{route('jadwal')}}" class="nav-link {{ request()->is('manage-jadwal') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-calendar"></i>
+          <li class="nav-item {{ request()->is('manage-jadwal') || request()->is('manage-jadwal/*') ? 'has-treeview menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->is('manage-jadwal') || request()->is('manage-jadwal/*') ? 'active' : '' }}">
+              <i class="fa fa-calendar"></i>
               <p>
                 Manage Jadwal
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('jadwal')}}" class="nav-link {{ request()->is('manage-jadwal') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Jadwal</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('jadwal.riwayat')}}" class="nav-link {{ request()->is('manage-jadwal/riwayat') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Riwayat Jadwal</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-header">Manage Users</li>
@@ -119,7 +135,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="" class="nav-link {{ request()->is('admin/manage-pengecer') ? 'active' : '' }}">
+            <a href="{{route('admin')}}" class="nav-link {{ request()->is('manage-admin') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-cog"></i>
               <p>
                 Manage Admin
@@ -127,29 +143,15 @@
             </a>
           </li>
 
-          <!-- <li class="nav-item {{ request()->is('admin/donasi') || request()->is('admin/donasi/*')  ? 'has-treeview menu-open' : '' }}">
-            <a href="#" class="nav-link {{ request()->is('admin/donasi') || request()->is('admin/donasi/*') ? 'active' : '' }}">
-              <i class="fa fa-hand-holding-usd"></i>
+          <li class="nav-header">Setting</li>
+          <li class="nav-item">
+            <a href="{{route('departemen')}}" class="nav-link {{ request()->is('manage-departemen') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tag"></i>
               <p>
-                Donasi
-                <i class="right fas fa-angle-left"></i>
+                Manage Departemen
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="" class="nav-link {{ request()->is('admin/donasi/create') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Tambah Donasi</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link {{ request()->is('admin/donasi') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>List Donasi</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
+          </li>
 
         </ul>
       </nav>

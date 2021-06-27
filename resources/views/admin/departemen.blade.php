@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('title')
-Manage Jadwal
+Manage Departemen
 @endsection
 
 @section('css')
@@ -20,20 +20,16 @@ Manage Jadwal
 
 			<div class="card">
 				<div class="card-header">
-					<h2 class="card-title"><i class="fa fa-calendar-week"></i> List Jadwal</h2>
-					<button data-toggle='modal' data-target='#modal-add-jadwal' title='Tambah Jadwal' class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"> Tambah Jadwal</i></button>
+					<h2 class="card-title"><i class="fa fa-tag"></i> List Departemen</h2>
+					<button data-toggle='modal' data-target='#modal-add-departemen' title='Tambah Departemen' class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"> Tambah Departemen</i></button>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive-sm">
-						<table id="tabel_jadwal" class="table table-bordered" style="width:100% !important; ">
+						<table id="tabel_departemen" class="table table-bordered" style="width:100% !important; ">
 							<thead>
 								<tr>
 									<th>No.</th>
 									<th>Nama</th>
-									<th>Ruangan</th>
-									<th>Waktu</th>
-									<th>Departemen</th>
-									<th>Status</th>
 									<th>Action</th>
 								</tr>
 							</thead>  
@@ -46,63 +42,23 @@ Manage Jadwal
 </section>
 <!-- /.content -->
 
-<!-- Modal Tambah Jadwal -->
-<div class="modal fade bd-example-modal-lg" id="modal-add-jadwal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+<!-- Modal Tambah Departemen -->
+<div class="modal fade bd-example-modal-lg" id="modal-add-departemen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title"><i class="fa fa-calendar-minus"></i> Tambah Jadwal</h5>
+				<h5 class="modal-title"><i class="fa fa-tag"></i> Tambah Departemen</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" id="add-jadwal" action="{{route('jadwal.store')}}">
+			<form method="post" id="add-departemen">
 				@csrf
 				<div class="modal-body">
 					<div class="form-group">
-						<label>Nama Acara</label>
+						<label>Nama Departemen</label>
 						<input type="text" name="nama" class="form-control">
-					</div>
-					<div class="form-group">
-						<label>Ruangan</label>
-						<input type="text" name="ruangan" class="form-control">
-					</div>
-					<div class="form-group">
-						<label>Departemen</label>
-						@foreach($dpt as $dt) 
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" name="departemen[]" value="{{$dt->id}}">
-							<label class="form-check-label">
-								{{$dt->nama}}
-							</label>
-						</div>
-						@endforeach
-					</div>
-					<div class="form-group row">
-						<div class="col-md-6">
-							<label>Tanggal</label>
-							<input type="date" name="waktu" class="form-control" min="<?php echo date('Y-m-d'); ?>">
-						</div>
-						<div class="col-md-3">
-							<label>Jam</label>
-							<select name="jam" class="form-control">
-								@for ($i = 0; $i < 24; $i++)
-								<option value="{{$i}}" >{{$i}}</option>
-								@endfor
-							</select>
-						</div>
-						<div class="col-md-3">
-							<label>Menit</label>
-							<select name="menit" class="form-control">
-								@for ($i = 0; $i < 60; $i++)
-								<option value="{{$i}}" >{{$i}}</option>
-								@endfor
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Deskripsi</label>
-						<textarea name="deskripsi" class="form-control" rows="4"></textarea>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -114,19 +70,59 @@ Manage Jadwal
 	</form>
 </div>
 </div>
-<!-- End Modal Tambah Jadwal -->
+<!-- End Modal Tambah Departemen -->
+
+
+<!-- Modal Edit Departemen -->
+<div class="modal fade bd-example-modal" id="modal-edit-departemen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<form method="post" id="edit-departemen">
+			@csrf
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Departemen </h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="hidden_id" id="edit-departemen-id">
+					<div class="form-group">
+						<label>Nama Departemen</label>
+						<input type="text" class="form-control" name="nama" id="nama-departemen">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary btn-sm">Edit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- End Modal Edit Departemen -->
 @endsection
 
 @section('js')
 <script type="text/javascript" src="{{asset('datatables.min.js')}}"></script>
 <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 <script type="text/javascript">
+	$('#modal-edit-departemen').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) 
+		var id = button.data('id') 
+		var nama = button.data('nama')
 
-	$('#add-jadwal').submit(function(e){ // tambah jadwal
+		var modal = $(this)
+		modal.find('.modal-body #edit-departemen-id').val(id)
+		modal.find('.modal-body #nama-departemen').val(nama)
+		// modal.find('.modal-body #lokasi').val(lokasi)
+	})
+
+	$('#add-departemen').submit(function(e){ // tambah pegawai
 		e.preventDefault();
 
 		var request = new FormData(this);
-		var endpoint= '{{route("jadwal.store")}}';
+		var endpoint= '{{route("departemen.store")}}';
 		$.ajax({
 			url: endpoint,
 			method: "POST",
@@ -136,9 +132,9 @@ Manage Jadwal
 			processData: false,
             // dataType: "json",
             success:function(data){
-            	$('#add-jadwal')[0].reset();
-            	$('#modal-add-jadwal').modal('hide');
-            	$('#tabel_jadwal').DataTable().ajax.reload();
+            	$('#add-departemen')[0].reset();
+            	$('#modal-add-departemen').modal('hide');
+            	$('#tabel_departemen').DataTable().ajax.reload();
             	berhasil(data.status, data.pesan);
             },
             error: function(xhr, status, error){
@@ -152,7 +148,43 @@ Manage Jadwal
           }); 
 	});
 
-function hapus_data() { // menghapus jadwal
+
+	$('#edit-departemen').submit(function(e){ //edit jurusan
+		e.preventDefault();
+		var request = new FormData(this);
+		var endpoint= '{{route("departemen.update")}}';
+		$.ajax({
+			url: endpoint,
+			method: "POST",
+			data: request,
+			contentType: false,
+			cache: false,
+			processData: false,
+            // dataType: "json",
+            success:function(data){
+            	if(data.status == 'error') {
+
+            	} else {
+            		$('#edit-departemen')[0].reset();
+            		$('#tabel_departemen').DataTable().ajax.reload();
+            		$('#modal-edit-departemen').modal('hide');
+            	}
+            	
+            	berhasil(data.status, data.pesan);
+            },
+            error: function(xhr, status, error){
+            	var error = xhr.responseJSON; 
+            	if ($.isEmptyObject(error) == false) {
+            		$.each(error.errors, function(key, value) {
+            			gagal(key, value);
+            		});
+            	}
+            } 
+          }); 
+	});
+
+
+function hapus_data() { // menghapus jurusan
 	$(document).on('click', '#del_id', function(){
 		Swal.fire({
 			title: 'Anda Yakin ?',
@@ -176,48 +208,11 @@ function hapus_data() { // menghapus jadwal
 						'_token'  : token
 					},
 					success:function(data){
-						$('#tabel_jadwal').DataTable().ajax.reload();
-						berhasil(data.status, data.pesan);
-					},
-					error: function(xhr, status, error){
-						var error = xhr.responseJSON; 
-						if ($.isEmptyObject(error) == false) {
-							$.each(error.errors, function(key, value) {
-								gagal(key, value);
-							});
-						}
-					} 
-				});
-			}
-		});
-	});
-}
+						if(data.status == 'error') {
 
-function selesai() { // ubah status jadwal menjadi selesai
-	$(document).on('click', '#jadwal_id', function(){
-		Swal.fire({
-			title: 'Anda Yakin ?',
-			text: "Anda tidak dapat mengembalikan jadwal yang telah diselesaikan.",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Ya, Lanjutkan!',
-			timer: 6500
-		}).then((result) => {
-			if (result.value) {
-				var me = $(this),
-				url = me.attr('href'),
-				token = $('meta[name="csrf-token"]').attr('content');
-				$.ajax({
-					url: url,
-					method: "POST",
-					data : {
-						'_method' : 'PUT',
-						'_token'  : token
-					},
-					success:function(data){
-						$('#tabel_jadwal').DataTable().ajax.reload();
+						} else {
+							$('#tabel_departemen').DataTable().ajax.reload();
+						}
 						berhasil(data.status, data.pesan);
 					},
 					error: function(xhr, status, error){
@@ -235,7 +230,7 @@ function selesai() { // ubah status jadwal menjadi selesai
 }
 
 tabel = $(document).ready(function(){
-	$('#tabel_jadwal').DataTable({
+	$('#tabel_departemen').DataTable({
 		"processing": true,
 		"serverSide": true,
 		"deferRender": true,
@@ -244,16 +239,12 @@ tabel = $(document).ready(function(){
         "order": [[ 0, 'desc' ]],
         "aLengthMenu": [[10, 25, 50],[ 10, 25, 50]],
         "ajax":  {
-                "url":  '{{route("table.jadwal")}}', // URL file untuk proses select datanya
+                "url":  '{{route("table.departemen")}}', // URL file untuk proses select datanya
                 "type": "GET"
               },
               "columns": [
               { data: 'DT_RowIndex', name:'DT_RowIndex'},
               { "data": "nama" },
-              { "data": "ruangan" },
-              { "data": "waktu" },
-              { "data": "departemen" },
-              { "data": "status" },
               { "data": "action" },
               ]
             });

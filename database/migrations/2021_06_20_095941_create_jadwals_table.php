@@ -19,6 +19,7 @@ class CreateJadwalsTable extends Migration
             $table->string('ruangan', 100);
             $table->string('deskripsi', 200);
             $table->datetime('waktu');
+            $table->string('departemen');
             $table->enum('status', ['0', '1']); // 0 = inactive, 1 = is_active
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();

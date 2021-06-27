@@ -17,10 +17,13 @@ class CreatePegawaisTable extends Migration
             $table->id();
             $table->string('nip', 100)->unique();
             $table->string('nama', 100);
-            $table->string('email', 100);
+            $table->string('email', 100)->unique();
             $table->string('nohp', 20);
             $table->string('alamat', 150);
+            $table->bigInteger('departemen_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('departemen_id')->references('id')->on('departemens');
         });
     }
 

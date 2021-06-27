@@ -29,14 +29,14 @@
 				<!-- small box -->
 				<div class="small-box bg-light">
 					<div class="inner">
-						<h3>5</h3>
+						<h3>{{$jdw}}</h3>
 
-						<p>Pesanan</p>
+						<p>Jadwal</p>
 					</div>
 					<div class="icon">
-						<i class="fas fa-cash-register"></i>
+						<i class="fas fa-calendar-minus"></i>
 					</div>
-					<a href="" class="small-box-footer" >More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{route('jadwal')}}" class="small-box-footer" >More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->
@@ -44,14 +44,14 @@
 				<!-- small box -->
 				<div class="small-box bg-success">
 					<div class="inner">
-						<h3>5</h3>
+						<h3>{{$pgw}}</h3>
 
-						<p>Jumlah Distribusi Aktif</p>
+						<p>Jumlah Pegawai</p>
 					</div>
 					<div class="icon">
-						<i class="fas fa-hourglass-half"></i>
+						<i class="fas fa-users"></i>
 					</div>
-					<a href="" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{route('pegawai')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->
@@ -59,14 +59,14 @@
 				<!-- small box -->
 				<div class="small-box bg-warning">
 					<div class="inner">
-						<h3>5</h3>
+						<h3>{{$dpt}}</h3>
 
-						<p>Manage Peternak</p>
+						<p>Jumlah Departemen</p>
 					</div>
 					<div class="icon">
-						<i class="fas fa-user-tag"></i>
+						<i class="fas fa-tag"></i>
 					</div>
-					<a href="" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{route('departemen')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->
@@ -75,14 +75,14 @@
 				<!-- small box -->
 				<div class="small-box bg-dark">
 					<div class="inner">
-						<h3>5</h3>
+						<h3>{{$adm}}</h3>
 
-						<p>Manage Pengecer</p>
+						<p>Jumlah Admin</p>
 					</div>
 					<div class="icon">
-						<i class="fas fa-users"></i>
+						<i class="fas fa-user-cog"></i>
 					</div>
-					<a href="" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+					<a href="{{route('admin')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
 			<!-- ./col -->

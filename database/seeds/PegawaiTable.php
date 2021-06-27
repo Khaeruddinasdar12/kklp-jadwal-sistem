@@ -17,6 +17,7 @@ class PegawaiTable extends Seeder
             'email' => 'jamal@gmail.com',
             'nohp' => '082344949505',
             'alamat' => 'Jln Paccerakkang',
+            'departemen_id' => 1
         ]);
 
         DB::table('pegawais')->insert([
@@ -25,6 +26,7 @@ class PegawaiTable extends Seeder
             'email' => 'rusdi@gmail.com',
             'nohp' => '082344949505',
             'alamat' => 'Jln Paccerakkang',
+            'departemen_id' => 2
         ]);
 
         DB::table('pegawais')->insert([
@@ -33,6 +35,7 @@ class PegawaiTable extends Seeder
             'email' => 'rian@gmail.com',
             'nohp' => '082344949505',
             'alamat' => 'Jln Paccerakkang',
+            'departemen_id' => 3
         ]);
 
     }
