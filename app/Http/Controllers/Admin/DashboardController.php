@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $data = Jadwal::select('jadwals.id', 'jadwals.nama', 'jadwals.ruangan', 'jadwals.deskripsi', 'jadwals.waktu',DB::raw('group_concat(concat(departemens.nama)SEPARATOR ", ") as departemen'))
         ->leftjoin("departemens",\DB::raw("FIND_IN_SET(departemens.id,jadwals.departemen)"),">",\DB::raw("'0'"))
         
-        ->orderBy('jadwals.waktu', 'desc')
+        ->orderBy('jadwals.waktu', 'asc')
         ->groupBy('jadwals.id')
         ->where('status', '0')
         ->limit(6)
